@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * @Author: HB
- * @Description: 面试题03 - 求斐波那契数列的第n项
+ * @Description: 面试题10 - 求斐波那契数列的第n项
  *               描述: 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项。斐波那契数列的定义如下：
  *                    F(0) = 0,   F(1) = 1
  *                    F(N) = F(N - 1) + F(N - 2), 其中 N > 1.
@@ -18,7 +18,7 @@ import java.util.Map;
  *               Remark: <LeeCode 509> 斐波那契数列
  * @CreateDate: 22:20 2020/10/27
  */
-public class Q10I {
+public class Q10 {
 
     /**
      * @Author: HB
@@ -74,7 +74,7 @@ public class Q10I {
             return map.get(n);
         }
 
-        int subResult = (compute(n - 1) + compute(n - 2)) % 1000000007;
+        int subResult = (compute2(n - 1) + compute2(n - 2)) % 1000000007;
         map.put(n, subResult);
         return  subResult;
 
