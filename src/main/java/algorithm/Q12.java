@@ -128,7 +128,7 @@ public class Q12 {
      * index：字符索引
      * word：查找字符
      */
-    public static boolean dfs2(char[][] board, int x, int y, int index, String word) {
+    public static boolean dfs2 (char[][] board, int x, int y, int index, String word) {
 
         // 1. 递归结束条件 - 找到了符合条件的路径
         if (index == word.length())
