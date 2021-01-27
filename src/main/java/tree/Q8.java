@@ -30,27 +30,27 @@ public class Q8 {
             this.val = val;
         }
     }
-
+    // 给定的节点主要可以分以下几种情况：
+    // 1. 如果当前节点有右儿子，则右子树中最左侧的节点就是当前节点的后继;
+    // 2. 如果当前节点没有右儿子，则需要沿着father域一直向上找，找到第一个是其father左儿子的节点，该节点的father就是当前节点的后继
     public static TreeNode findNextNode (TreeNode node) {
         TreeNode nextNode = null;
-        // 当前结点有右子树, 则从其右子树一直向左遍历就可找到下一个结点
+        // 1. 如果当前节点有右儿子，则右子树中最左侧的节点就是当前节点的后继;
         if (node.right != null) {
             nextNode = node.right;
             while (nextNode.left != null) {
                 nextNode = nextNode.left;
             }
         }
-        // 没有右子树,且当父节点不为空时
+        // 2. 如果当前节点没有右儿子，则需要沿着parent域一直向上找，找到第一个是其parent左儿子的节点，该节点的parent就是当前节点的后继
         else if (node.parent != null) {
             TreeNode currNode = node;
             TreeNode parentNode = node.parent;
             // 当前结点是父节点的右结点时,往上进行查找下一个结点
-            // 找到一个是它父节点的左节点的节点
             while (parentNode != null && currNode == parentNode.right) {
                 currNode = parentNode;
                 parentNode = parentNode.parent;
             }
-            // 也对当前结点是父节点的左结点这种情况进行了处理
             nextNode = parentNode;
         }
         return nextNode;

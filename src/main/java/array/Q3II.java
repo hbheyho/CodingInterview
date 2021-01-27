@@ -44,40 +44,38 @@ public class Q3II {
      * @Params:
      * @Returns:
     */
+    //  二分查找解法：
+    // 算法思想:
+    // 1. 将1 ~ n的数字从中间的数字m分为两部分, 分别为 1 ~ m 和 m + 1 ~ n
+    // 2. 如果1 ~ m范围的数组在输入数组nums中出现的次数超过了m, 则 1 ~ m中一定存在重复数字; 否则, 重复
+    // 数字出现了 m + 1 ~ n中
+    // 3. 继续把包含了重复数字的数值范围一分为二, 直到找到重复数字
     public static int findRepeatNumberByBinarySearch(int[] nums) {
-        int start = 1;
-        int end = nums.length - 1;
-        int middle = 0;
-        while (start <= end) {
-            // 不直接使用 (end + start) / 2 是为了防止int类型的溢出
-            middle = (end - start) / 2 + start;
-            // 计算出现次数
-            int count = countRange (nums, start, middle);
-            if (end == start) {
-                if (count > 1) {
-                    return start;
-                }else {
-                    break;
-                }
-            }
-            // 若 [start,middle]范围的数字在数组中出现的次数 大于 (middle - start) + 1, 则代表重复
-            // 数字出现在[start,middle]中, 否则重复数字出现在[middle+1, end]中
-            if (count > (middle - start + 1)){
-                end = middle;
-            } else {
-                start = middle + 1;
-            }
+        // 二分查找
+        // 基于[1, n]进行二分查找
+        int left = 1, right = nums.length - 1;
+        while (left < right) {
+            int mid = (left + right) >> 1;
+            // 计算[left, mid]在nums中的出现次数
+            int count = countRange (nums, left, mid);
+            // 如果出现次数大于 mid - left + 1, 则表示重复元素出现在[left, mid]之中
+            // 否则出现在[mid + 1, right]中
+            if (count > mid - left + 1)
+                right = mid;
+            else
+                left = mid + 1;
         }
-        return 0;
+
+        return left;
+
     }
 
-    // 统计start 至 middle 在数组出出现的
-    private static int countRange (int[] nums, int start, int middle) {
+    // 计算[left, mid]在nums中的出现次数
+    public static int countRange(int[] nums, int left, int right) {
         int count = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] >= start && nums[i] <= middle) {
+            if (nums[i] >= left && nums[i] <= right)
                 count++;
-            }
         }
         return count;
     }

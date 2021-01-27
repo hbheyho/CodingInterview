@@ -48,7 +48,7 @@ public class Q11 {
 
     /**
      * @Author: HB
-     * @Description: 二分查找解法二
+     * @Description: 二分查找解法二 - 剑指Offer 官方解法
      * @Date: 21:47 2020/11/10
      * @Params: null
      * @Returns:
@@ -97,6 +97,47 @@ public class Q11 {
                 min = numbers[i];
         }
         return min;
+    }
+    
+    /**
+     * @Author: HB
+     * @Description: 二分查找解法三
+     * @Date: 9:25 2021/1/17
+     * @Params: null
+     * @Returns: 
+    */
+    // 显而易见直接可以使用O(n)的时间复杂度求解, 但是绝对不是合理的答案, 需要想一个小于O(n)的时间复杂度算法
+    // 题意：通过数组旋转的特性找出输入数组中的最小值
+    // 二分查找: 未必一定要是升序序列, 只要对于一个序列, 存在那个一个性质可以输入序列分为两部分即可使用二分查找
+    // 本题特性在于: 最小值的索引为i, 则最小值左边的元素nums[0, i -1]都大于等于nums[0], 而最小值右边的元素nums[i, nums.length - 1](包括自身)不满足这种特性
+    // 那么我们就可以基于这个特性来完成二分查找
+    // 1. 但要完成上述操作需要处理特殊情况, 即若最小值最右边的元素中存在与nums[0]相等的元素时, 需要先将其删除只有进行了这种额外的处理, 才能满足上述特性
+    // 2. 另外要注意处理完全单调的情况, 即完成(1)步骤的数据预处理之后, 剩下的最后一个数大于等于第一个数, 则说明数组完全单调
+    public static int minArrayByBinarySearch3(int[] nums) {
+
+        int n = nums.length - 1;
+        if (n < 0)
+            return -1;
+
+        // 1. 数据预先处理, 使得满足二分查找性质
+        while (n > 0 && nums[n] == nums[0]) n--;
+
+        // 2. 剩下的最后一个数大于等于第一个数, 则说明数组完全单调, 直接返回最后一个元素
+        if (nums[n] >= nums[0]) return nums[0];
+
+        // 3. 进行二分查找
+        int left = 0, right = n;
+        while (left < right) {
+            int mid = (left + right) >> 1;
+            // mid索引所在的位置满足上述所描述的特性
+            if (nums[mid] >= nums[0]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return nums[left];
     }
 
 }

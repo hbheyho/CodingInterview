@@ -1,5 +1,8 @@
 package algorithm;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * @Author: HB
  * @Description: 面试题13 - 机器人的运动范围
@@ -97,6 +100,65 @@ public class Q13 {
 
     }
 
+
+
+    /**
+     * @Author: HB
+     * @Description: BFS 解法
+     * @Date: 9:52 2021/1/19
+     * @Params: null
+     * @Returns:
+    */
+    // Pair => 坐标(x,y), 也可用Java提供的Pair类来进行
+    static class Pair {
+        int key;
+        int value;
+        public Pair(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    // 机器人每次都可左,右,上,下
+    static int[][] move = new int[][]{{0, -1},{0, 1}, {-1, 0}, {1, 0}};
+    public static int movingCount3(int m, int n, int k)
+    {
+        if (m == 0 || n == 0)
+            return 0;
+
+        // 保存最大能经过的格子数量
+        int step = 0;
+        // 存储每个位置是否被访问
+        boolean[][] visited = new boolean[m][n];
+
+        Deque<Pair> queue = new LinkedList<>();
+        queue.add(new Pair(0, 0));
+
+
+        while (!queue.isEmpty()) {
+
+            Pair coordinate = queue.poll();
+            int x = coordinate.key;
+            int y = coordinate.value;
+            visited[x][y] = true;
+            step++;
+
+            // 从当前坐标开始, 从左右上下开始行走
+            for (int i = 0; i < 4; i++) {
+                int newX = x + move[i][0];
+                int newY = y + move[i][1];
+                // 满足边界条件/未被访问/数位之和未大于threshold
+                if (0 <= newX && newX < m && 0 <= newY && newY < n && !visited[newX][newY] && !isAccord(newX, newY, k)) {
+                    queue.offer(new Pair(newX, newY));
+                }
+            }
+
+        }
+
+        return step;
+    }
+
+
     // 判断是否满足进入条件
     public static boolean isAccord(int x, int y, int k) {
 
@@ -114,8 +176,10 @@ public class Q13 {
 
 
 
+
+
     public static void main(String[] args) {
-        int m = 2, n = 3, k = 1;
-        movingCount(m, n, k);
+        int m = 4, n = 5, k = 7;
+        movingCount3(m, n, k);
     }
 }

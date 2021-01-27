@@ -78,6 +78,11 @@ public class Q4 {
      * @Params: null
      * @Returns:
     */
+    // 根据输入二维数组的性质：
+    // 假定当前枚举的元素为x：
+    //   1. 如果 x 等于target，则说明我们找到了目标值，返回true；
+    //   2. 如果 x 小于target，则 x 左边的数一定都小于target，我们可以直接排除当前一整行的数；
+    //   3. 如果 x 大于target，则 x 下边的数一定都大于target，我们可以直接排序当前一整列的数
     public static boolean findNumberIn2DArrayByLine(int[][] matrix, int target) {
         int row = matrix.length;
         if (row == 0) return false;

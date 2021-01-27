@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * @Author: HB
- * @Description: 面试题05 - 替换空格
+ * @Description: 面试题07 - 重建二叉树
  *               描述: 输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树。
  *               假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
  *               Case:
@@ -38,9 +38,16 @@ public class Q7 {
      * @Params:
      * @Returns:
     */
+    // 算法流程：
+    // 递归建立整棵二叉树：先递归创建左右子树，然后创建根节点，并让指针指向两棵子树。
+    // 具体步骤如下：
+    // 先利用前序遍历找根节点：前序遍历的第一个数，就是根节点的值;
+    // 在中序遍历中找到根节点的位置 inorderRoot，则 inorderRoot 左边是左子树的中序遍历，右边是右子树的中序遍历;
+    // 假设左子树的中序遍历的长度是 leftNums，则在前序遍历中，根节点后面的 leftNums 个数，是左子树的前序遍历，剩下的数是右子树的前序遍历;
+    // 有了左右子树的前序遍历和中序遍历，我们可以先递归创建出左右子树，然后再创建根节点.
+
     // 使用Map来记录中序遍历中每个节点位置
     static Map<Integer, Integer> inorderMap;
-
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
 
         // 存储中序节点值以及每个值出现位置
@@ -73,5 +80,17 @@ public class Q7 {
 
         // 3. 递归返回值
         return root;
+    }
+
+    public static void main(String[] args) {
+        int x = 34, y = 35;
+        int sum = 0;
+        while (x > 0 | y > 0) {
+            sum += (x % 10) + (y % 10);
+            x /= 10;
+            y /= 10;
+        }
+        System.out.println(sum);
+        // return sum == threshold;
     }
 }
