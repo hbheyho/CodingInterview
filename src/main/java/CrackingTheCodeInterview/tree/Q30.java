@@ -2,7 +2,7 @@ package CrackingTheCodeInterview.tree;
 
 /**
  * @Author: HB
- * @Description: 面试题04.07 - 首个公共祖先
+ * @Description: 面试题04.08 - 首个公共祖先
  *               描述: 设计并实现一个算法，找出二叉树中某两个节点的第一个共同祖先。
  *                     不得将其他的节点存储在另外的数据结构中。注意：这不一定是二叉搜索树
  *               Case:
